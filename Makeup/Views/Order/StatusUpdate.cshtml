@@ -1,0 +1,19 @@
+﻿@using Makeup.ViewModel
+@model OrderAdminVM
+
+<h2>Update Order Status</h2>
+
+<form asp-action="StatusUpdate">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="OrderStatus"></label>
+        <select asp-for="OrderStatus" class="form-control">
+            <option value="1">Pending</option>
+            <option value="2">Delivered</option>
+            <option value="3">Cancled</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Status</button>
+</form>

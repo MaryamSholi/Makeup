@@ -1,0 +1,27 @@
+﻿@using Makeup.ViewModel
+@model List<CategoryVM>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="p-3">
+<div class="row px-2" >
+    @foreach (var item in Model)
+				{
+    <div class="col-lg-3 col-6  " >
+            <div class="small-box" style="border-radius: 50%; width: 200px; height: 200px">
+        <div class=" bg-info text-center"  style="border-radius: 50%; width: 200px; height: 200px">
+            <a asp-controller="Category" asp-action="Details" asp-route-id="@item.Id">
+                <img src="~/img/Products/shop.jpg" style="border-radius: 50%;; width: 200px; height: 200px" />
+
+            </a>
+        </div>
+        <div class="text-center text-bold text-red">
+            <p>@item.Name</p>
+        </div>
+        </div>
+    </div>
+                }
+
+
+	</div>
+</div>

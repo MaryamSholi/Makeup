@@ -1,0 +1,4 @@
+﻿.card-header::after
+{
+    display : none;
+}

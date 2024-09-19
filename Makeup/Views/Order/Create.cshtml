@@ -1,0 +1,32 @@
+﻿@using Makeup.ViewModel
+@model OrderCreateVM
+
+<form asp-controller="Order" asp-action="Create" method="post">
+        <input type="hidden" asp-for="ProductId" />
+    <input type="hidden" asp-for="ProductName" />
+        <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="Price" />
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+        <div>
+            <label>Price:</label>
+            <span>@Model.Price</span>
+        </div>
+
+        <div>
+            <label>Quantity:</label>
+            <input asp-for="Qty" />
+        </div>
+
+        <div>
+            <label>Total Price:</label>
+            <span>@Model.TotalPrice</span>
+        </div>
+
+        <button type="submit">Submit Order</button>
+    </form>

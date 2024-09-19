@@ -1,0 +1,25 @@
+﻿@using Makeup.ViewModel
+@model RoleVM
+
+@section Title {
+Roles
+}
+@section SubTitle
+{
+	Create
+}
+
+
+<form asp-controller="Roles" asp-action="Create">
+	<div class="card-body">
+		<div class="form-group">
+			<label asp-for="Name"></label>
+			<input type="text" class="form-control" asp-for="Name" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+	</div>
+	<div class="card-footer">
+		<button type="submit" class="btn btn-primary">ADD</button>
+	</div>
+
+</form>

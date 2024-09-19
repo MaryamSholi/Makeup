@@ -1,0 +1,68 @@
+﻿@using Makeup.ViewModel
+@model List<OrderAdminVM>
+
+<div class="card-body">
+	@if (!Model.Any())
+	{
+		<div class="alert alert-warning alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+			No Data Found.
+		</div>
+	}
+	else
+	{
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Order ID</th>
+					<th>User Name</th>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total Price</th>
+					<th>Order Date</th>
+					<th>User Email</th>
+					<th>User Address</th>
+					<th>Order Status</th>
+					<th>Update Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.Id</td>
+						<td>@item.User</td>
+						<td>@item.Product</td>
+						<td>@item.Qty</td>
+						<td>@item.Price $</td>
+						<td>@item.TotalPrice $</td>
+						<td>@item.OrderDate</td>
+						<td>@item.Email</td>
+						<td>@item.Address</td>
+						@if (item.OrderStatus == 1)
+						{
+							<td class="bg-warning">pending</td>
+						}
+						else if (item.OrderStatus == 2)
+						{
+							<td class="bg-success">Delivered</td>
+						}
+						else if (item.OrderStatus == 3)
+						{
+							<td class="bg-danger">Cancled</td>
+						}
+						<td class="text-center">
+							<a asp-controller="Order" asp-action="StatusUpdate" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+
+						</td>
+
+
+
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>

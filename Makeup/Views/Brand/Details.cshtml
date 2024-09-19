@@ -1,0 +1,97 @@
+﻿@using Makeup.ViewModel
+@model BrandVM
+
+@section Title {
+Brands
+}
+@section SubTitle
+{
+	Details
+}
+<div class="text-center">
+	<h2 class="text-bold text-red">@Model.Name</h2>
+</div>
+@if (!Model.Products.Any())
+{
+	<div class="alert alert-warning alert-dismissible">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+		No Products Found.
+	</div>
+}
+else
+{
+
+	<div class="row pt-5 ">
+		@foreach (var product in Model.Products)
+		{
+
+
+			<div class="col-lg-3">
+				<div class="card">
+					@* 				<div class="card-header">
+			<h5 class="card-title m-0">@item.ProductName</h5>
+			</div> *@
+					<div class="card-body">
+						<img src="~/img/Products/@product.ImageUrl" width="100%" />
+						<h3 class="card-title m-0 text-bold text-red">@product.ProductName</h3>
+						<p class="card-text mt-2">@product.Description</p>
+						<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-success">Details</a>
+						@if (User.IsInRole("Admin"))
+						{						
+							<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
+						    <a data-id="@product.Id" class="btn btn-danger js-delete">Delete</a>
+						}
+
+
+
+					</div>
+				</div>
+			</div>
+		}
+
+	</div>
+}
+@section Scripts {
+	<script>
+
+		document.querySelectorAll(".js-delete").forEach((btn) => {
+			btn.onclick = async () => {
+				Swal.fire({
+					title: "Are you sure?",
+					text: "You won't be able to revert this!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Yes, delete it!"
+				}).then(async (result) => {
+					if (result.isConfirmed) {
+						const id = btn.dataset.id;
+
+						const response = await fetch(`/Product/Delete/${id}`, { method: 'POST' });
+
+						if (response.ok) {
+							btn.closest("tr").remove();
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 5000,
+								timerProgressBar: true,
+							})
+
+							Toast.fire({
+								icon: 'success',
+								title: 'Product deleted Successfully ',
+							})
+						}
+					}
+				});
+
+			}
+		});
+
+
+	</script>
+}

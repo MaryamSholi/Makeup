@@ -1,0 +1,38 @@
+﻿@using Makeup.ViewModel
+@model ProductVm
+
+@section Title {
+Products
+}
+@section SubTitle
+{
+	Details
+}
+
+<div class="p-5">
+	<div class="Product-name">
+		<h2 class="text-bold text-red">@Model.ProductName</h2>
+	</div>
+	<div class="Prod-Image">
+		<img src="~/img/Products/@Model.ImageUrl" width="200px" height="auto" />
+	</div>
+	<div class="prod-information">
+		<h4 class="text-green">Description</h4>
+		<p>@Model.Description</p>
+		@if(Model.Stock == 0)
+		{
+			<p><span class="text-red fs-4">Out Of Stock</span></p>
+		}
+		else
+		{
+			<p><span class="text-bold text-green fs-5">Stock : </span><span class="fs-4">@Model.Stock Products</span></p>
+
+		}
+		<p><span class="text-bold text-green fs-5">Price : </span><span class="text-red fs-4">@Model.Price $</span></p>
+		<p><span class="text-bold text-green fs-5">Brand : </span><span class="fs-4">@Model.Brand</span></p>
+		<p><span class="text-bold text-green fs-5">Belong to : </span><span class="text-red fs-4">@Model.Category</span></p>
+		<a asp-controller="Order" asp-action="Create" asp-route-id="@Model.id" class="btn btn-success">Create Order</a>
+
+
+	</div>
+</div>
