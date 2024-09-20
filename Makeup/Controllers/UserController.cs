@@ -43,7 +43,6 @@ namespace Makeup.Controllers
 
 			return View(userViewModel);
 		}
-		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
@@ -79,7 +78,6 @@ namespace Makeup.Controllers
 
 
 		}
-		[Authorize]
         public async Task<IActionResult> UserProfile(int id)
         {
 			var userId = userManager.GetUserId(User);
@@ -90,7 +88,50 @@ namespace Makeup.Controllers
 
 			return View(viewModel);
         }
+		[AllowAnonymous]
+		[HttpGet]
+		public async Task<IActionResult> UserRegister()
+		{
+			var roles = await roleManager.Roles.ToListAsync();
+
+			var viewModel = new ApplicationUserCreateVM
+			{
+				Roles = roles.Select(role => new SelectListItem
+				{
+					Value = role.Name,
+					Text = role.Name
+				}).ToList(),
+			};
+			return View(viewModel);
+		}
+		[AllowAnonymous]
+		[HttpPost]
+		public async Task<IActionResult> UserRegister(ApplicationUserCreateVM userCreateVM)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(userCreateVM);
+			}
+			
+			var user = mapper.Map<ApplicationUser>(userCreateVM);
+
+			var result = await userManager.CreateAsync(user, userCreateVM.PasswordHash);
+
+			if (!result.Succeeded)
+			{
+				return View(userCreateVM);
+			}
+			string selectedRole = "User"; 
+
+			if (selectedRole != null)
+			{
+				await userManager.AddToRoleAsync(user, selectedRole);
+			}
+			return RedirectToAction( "Index", "Home");
 
 
-    }
+		}
+
+
+	}
 }
