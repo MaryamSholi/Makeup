@@ -94,14 +94,8 @@ namespace Makeup.Controllers
 		{
 			var roles = await roleManager.Roles.ToListAsync();
 
-			var viewModel = new ApplicationUserCreateVM
-			{
-				Roles = roles.Select(role => new SelectListItem
-				{
-					Value = role.Name,
-					Text = role.Name
-				}).ToList(),
-			};
+			var viewModel = new ApplicationUserCreateVM();
+			
 			return View(viewModel);
 		}
 		[AllowAnonymous]
